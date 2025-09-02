@@ -1,0 +1,15 @@
+services:
+  oracle:
+    image: container-registry.oracle.com/database/free:${CUSTOM_ORACLE_DB_DOCKER_IMAGE_TAG:-latest}
+    ports:
+      - ${CUSTOM_ORACLE_DB_HOST_PORT:-1521}:1521
+    environment:
+      - ORACLE_PWD=secret
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+      - ./oracle/scripts/startup:/opt/oracle/scripts/startup
+      - ./oracle/scripts/setup:/opt/oracle/scripts/setup
+      - ./oracle/work:/work
+
+volumes:
+  oracle-data:
